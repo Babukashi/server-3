@@ -22,11 +22,58 @@
     function dataset() {
       return {
         data: false,
+
         async fetchData() {
+          //const file = document.querySelector('input').files[0];
+
+          //if (!file) {
+          //window.alert('画像ファイルを選んでください');
+          //return;
+          //}
+
+          //const body = new FormData();
+          //body.append('image', file, file.name);
+
+          const reader = new FileReader();
+
+          let file = false;
+          const input = document.querySelector('input');
+          input.addEventListener('change', () => {
+            file = input.files[0];
+            if (file) {
+              reader.readAsDataURL(file);
+            }
+          });
+
+          let image = false;
+          reader.addEventListener('load', async (e) => {
+            image = reader.result;
+            document.querySelector('img').src = image;
+          });
+
+          document.querySelector('button').addEventListener('click', fetchData);
+          async function fetchData() {
+            if (!file) {
+              window.alert('先に画像ファイルを選んでください');
+              return;
+            }
+          }
+
+          const body = {
+            filename: file.name,
+            image: image
+          };
+
           const url = 'https://httpbin.org/post';
-          const res = await fetch(url);
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(body)
+          });
+
           const obj = await res.json();
-          this.data = obj;
           console.log(JSON.stringify(this.data, null, 2));
         }
       };
