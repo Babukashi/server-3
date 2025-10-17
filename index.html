@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>画像データを送る</title>
-  <script src="https://unpkg.com/petite-vue" defer init></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>画像データを送る</title>
+    <script src="https://unpkg.com/petite-vue" defer init></script>
+  </head>
 
-<body v-scope="dataset()">
-  <p>
-    <input type="file" accept=".png, .jpg, .jpeg" />
-    <figure><img height="200" /></figure> <!-- プレビュー用（JSONのみ） -->
-  </p>
-  <p>
-    <button @click="fetchData">データ取得</button>
-  </p>
-</body>
+  <body v-scope="dataset()">
+    <p>
+      <input type="file" accept=".png, .jpg, .jpeg" />
+      <figure><img height="200" /></figure>
+      <!-- プレビュー用（JSONのみ） -->
+    </p>
+    <p>
+      <button @click="fetchData">データ取得</button>
+    </p>
 
-<script>
-  function dataset() {
-    return {
-      data: false,
-      async fetchData() {
-        const url = 'https://httpbin.org/post';
-        const res = await fetch(url);
-        const obj = await res.json();
-        this.data = obj;
-        console.log(JSON.stringify(this.data, null, 2));
-      }
+    <p>
+      <input type="file" accept=".png, .jpg, .jpeg" />
+      <figure><img height="200" /></figure>
+    </p>
+    <p>
+      <button>送信</button>
+    </p>
+  </body>
+
+  <script>
+    function dataset() {
+      return {
+        data: false,
+        async fetchData() {
+          const url = 'https://httpbin.org/post';
+          const res = await fetch(url);
+          const obj = await res.json();
+          this.data = obj;
+          console.log(JSON.stringify(this.data, null, 2));
+        }
+      };
     }
-  }
-</script>
+  </script>
 </html>
