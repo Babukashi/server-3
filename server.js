@@ -8,6 +8,8 @@ app.use('/*', serveStatic({ root: './public' }));
 Deno.serve(app.fetch);
 
 app.get('/api', (c) => {
+  const res = await fetch('https://randomuser.me/api/');
+  const data = await res.json();
   console.log('aaaaaa');
-  return c.json({ message: 'Hello World!' });
+  return c.json(data);
 });

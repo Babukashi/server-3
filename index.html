@@ -23,6 +23,12 @@
       return {
         data: false,
 
+        async getData() {
+          const res = await fetch('/api');
+          this.data = await res.json();
+          console.log(this.data.message);
+        },
+
         async fetchData() {
           //const file = document.querySelector('input').files[0];
 
